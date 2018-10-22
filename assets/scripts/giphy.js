@@ -54,9 +54,11 @@ let giphyMaker = {
     },
 
     makeImage: function(image){
-        let newImageDiv = $(`<div>`);
+        let newImageDiv = $(`<div class="card">`);
         newImageDiv.html(`
-        <img src="${image.images.fixed_height.url}">
+
+        <img src="${image.images.fixed_height_still.url}" class="card-img-top">
+    <div class="card-body"><p class="card-text">url: ${image.url}<br>Giphy Score: ${image._score} <br> Rating: ${image.rating}</p></div>
         `);
         imagesView.prepend(newImageDiv);  
     },
