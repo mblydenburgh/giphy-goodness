@@ -50,14 +50,20 @@ let giphyMaker = {
 
     printImages: function(dataArray){
         console.log(`dataArray: ${dataArray}`);
-        dataArray.map(img=>{this.makeImage(img)})
+        dataArray.map(img=>{this.makeImage(img)});
+
+        $(`img`).click(function(){
+            console.log(this.data(`anim`));
+            //event.attr("src",this.attr("anim-url"));
+        })
+
     },
 
     makeImage: function(image){
         let newImageDiv = $(`<div class="card">`);
         newImageDiv.html(`
 
-        <img src="${image.images.fixed_height_still.url}" class="card-img-top">
+        <img src="${image.images.fixed_height_still.url}" class="card-img-top" data-static="${image.images.fixed_height_still.url}" data-anim="${image.images.fixed_height.url}">
     <div class="card-body"><p class="card-text">url: ${image.url}<br>Giphy Score: ${image._score} <br> Rating: ${image.rating}</p></div>
         `);
         imagesView.prepend(newImageDiv);  
