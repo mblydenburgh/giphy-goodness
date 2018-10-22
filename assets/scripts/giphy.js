@@ -12,9 +12,11 @@ const apiKey = 'rpelFBXi3lzv7VO6rXM08B9lJFN1a7aT';
 let giphyMaker = {
     characters: ['dennis reynolds', 'frank reynolds', 'deandra reynolds', 'charlie kelly', 'mac mcdonald'],
 
-    printButtons: function () {
+    printButtons: function () { //loop through characters array and call makeButton on each
         buttonsSection.empty();
         this.characters.map(character => { this.makeButton(character) });
+
+        //with buttons created, have event listener to serve imgs
         $(`.character-button`).click(function(){
             console.log(`passing ${this.innerHTML} to getData`);
             giphyMaker.getData(this.innerHTML);
@@ -41,8 +43,17 @@ let giphyMaker = {
             method:'GET'
         }).done(function(response){
             console.log(response);
+            giphyMaker(response.data);
         })
     },
+
+    serveImages: function(dataArray){
+        dataArray.map(img=>{this.makeImage(img)})
+    },
+
+    makeImage: function(image){
+        
+    }
 
     clearData: function(){ //reset the characters list back to its default values;
         this.characters = ['dennis reynolds', 'frank reynolds', 'deandra reynolds', 'charlie kelly', 'mac mcdonald'];
