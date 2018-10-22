@@ -3,6 +3,7 @@ const buttonsSection = $(`#buttons`);
 const searchButton = $(`#search-button`);
 const resetButton = $(`#reset-button`);
 const searchTextBox = $(`#search-box`);
+const imagesView = $(`#content-images`);
 
 //define global variables
 let searchString;
@@ -43,17 +44,22 @@ let giphyMaker = {
             method:'GET'
         }).done(function(response){
             console.log(response);
-            giphyMaker(response.data);
+            giphyMaker.printImages(response.data);
         })
     },
 
-    serveImages: function(dataArray){
+    printImages: function(dataArray){
+        console.log(`dataArray: ${dataArray}`);
         dataArray.map(img=>{this.makeImage(img)})
     },
 
     makeImage: function(image){
-        
-    }
+        let newImageDiv = $(`<div>`);
+        newImageDiv.html(`
+        <img src="${image.images.fixed_height.url}">
+        `);
+        imagesView.prepend(newImageDiv);  
+    },
 
     clearData: function(){ //reset the characters list back to its default values;
         this.characters = ['dennis reynolds', 'frank reynolds', 'deandra reynolds', 'charlie kelly', 'mac mcdonald'];
