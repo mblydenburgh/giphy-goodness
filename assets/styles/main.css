@@ -1,4 +1,6 @@
 .card{
     text-align: center;
-    margin: 10px auto;
+    margin: 10px 10px;
+    max-width: 30%;
+    float: left;
 }
