@@ -75,7 +75,7 @@ animated url: ${animUrl}`);*/
         newImageDiv.html(`
 
         <img src="${image.images.fixed_height_still.url}" class="card-img-top" data-static="${image.images.fixed_height_still.url}" data-anim="${image.images.fixed_height.url}">
-    <div class="card-body"><p class="card-text">url: ${image.url}<br>Giphy Score: ${image._score} <br> Rating: ${image.rating}</p></div>
+    <div class="card-body"><p class="card-text">url: ${image.url}<br>Giphy Score: ${image._score} <br> Rating: ${image.rating}</p><a href="${image.images.fixed_height.url}" download><button>Download</button></a></div>
         `);
         imagesView.prepend(newImageDiv);
     },
