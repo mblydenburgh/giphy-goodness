@@ -55,19 +55,6 @@ let giphyMaker = {
         //console.log(`dataArray: ${dataArray}`);
         dataArray.map(img => { this.makeImage(img) });
 
-        // $(`img`).click(function (event) {
-        //     let staticUrl = event.target.dataset.static;
-        //     let animUrl = event.target.dataset.anim;
-
-        //     //conditional statement to switch between animated and static url's
-        //     if (this.src === staticUrl) {
-        //         //make animated
-        //         this.src = animUrl;
-        //     } else {
-        //         //make static
-        //         this.src = staticUrl;
-        //     }
-        // });
         let addFavBtn = $(`.add-favorite-btn`);
 
         addFavBtn.on("click", this.addFavorite);
@@ -94,10 +81,14 @@ let giphyMaker = {
         let fixedAnimatedUrl = event.target.dataset.anim;
 
         favorites.push({ static: fixedStillUrl, animated: fixedAnimatedUrl });
-
+        localStorage.setItem("favorites",JSON.stringify(favorites));
 
         let newFavorite = $(`<img src="${fixedStillUrl}" data-static="${fixedStillUrl}" data-anim="${fixedAnimatedUrl}">`);
         favoritesView.append(newFavorite);
+    },
+
+    printFavorites: function(){
+
     },
 
     clearData: function () { //reset the characters list back to its default values;
