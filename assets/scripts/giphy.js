@@ -9,12 +9,14 @@ const favoritesView = $(`#favorites`)
 
 //define global variables
 let searchString;
-let favorites = [];
+//let favorites = [];
 const apiKey = 'rpelFBXi3lzv7VO6rXM08B9lJFN1a7aT';
 
 
 let giphyMaker = {
     characters: ['dennis reynolds', 'frank reynolds', 'deandra reynolds', 'charlie kelly', 'mac mcdonald'],
+
+    favorites: [],
 
     printButtons: function () { //loop through characters array and call makeButton on each
         buttonsSection.empty();
@@ -80,15 +82,21 @@ let giphyMaker = {
         let fixedStillUrl = event.target.dataset.static;
         let fixedAnimatedUrl = event.target.dataset.anim;
 
-        favorites.push({ static: fixedStillUrl, animated: fixedAnimatedUrl });
-        localStorage.setItem("favorites",JSON.stringify(favorites));
+        giphyMaker.favorites.push({ static: fixedStillUrl, animated: fixedAnimatedUrl });
+        localStorage.setItem("favorites", JSON.stringify(giphyMaker.favorites));
 
         let newFavorite = $(`<img src="${fixedStillUrl}" data-static="${fixedStillUrl}" data-anim="${fixedAnimatedUrl}">`);
         favoritesView.append(newFavorite);
     },
 
-    printFavorites: function(){
+    printFavorites: function () {
+        let savedFavorites = JSON.parse(localStorage.getItem("favorites"));
+        console.log(savedFavorites);
 
+        savedFavorites.map(favorite => {
+            let newFavorite = $(`<img src="${favorite.static}" data-static="${favorite.static}" data-anim="${favorite.anim}">`);
+            favoritesView.append(newFavorite);
+        })
     },
 
     clearData: function () { //reset the characters list back to its default values;
@@ -100,6 +108,7 @@ let giphyMaker = {
 //display initial list of fictional characters
 $(document).ready(function () {
     giphyMaker.printButtons();
+    giphyMaker.printFavorites();
 
     searchButton.click(function () {
         searchString = searchTextBox.val();
@@ -107,7 +116,7 @@ $(document).ready(function () {
         giphyMaker.addButton(searchString);
     });
 
-    $(document.body).on("click", "img",function(event){
+    $(document.body).on("click", "img", function (event) {
         if (event.target.src === event.target.dataset.static) {
             //make animated
             event.target.src = event.target.dataset.anim;
