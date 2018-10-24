@@ -55,26 +55,22 @@ let giphyMaker = {
         //console.log(`dataArray: ${dataArray}`);
         dataArray.map(img => { this.makeImage(img) });
 
-        $(`img`).click(function (event) {
-            //console.log(event.target.attributes);
-            // let staticUrl = event.target.attributes[2].value;
-            // let animUrl = event.target.attributes[3].value;
-            let staticUrl = event.target.dataset.static;
-            let animUrl = event.target.dataset.anim;
-            /*console.log(`static url: ${staticUrl}
-animated url: ${animUrl}`);*/
-            //conditional statement to switch between animated and static url's
-            if (this.src === staticUrl) {
-                //make animated
-                this.src = animUrl;
-            } else {
-                //make static
-                this.src = staticUrl;
-            }
-        });
-        let addFavBtn = $(`.addFavoriteBtn`);
+        // $(`img`).click(function (event) {
+        //     let staticUrl = event.target.dataset.static;
+        //     let animUrl = event.target.dataset.anim;
 
-        addFavBtn.on("click",this.addFavorite);
+        //     //conditional statement to switch between animated and static url's
+        //     if (this.src === staticUrl) {
+        //         //make animated
+        //         this.src = animUrl;
+        //     } else {
+        //         //make static
+        //         this.src = staticUrl;
+        //     }
+        // });
+        let addFavBtn = $(`.add-favorite-btn`);
+
+        addFavBtn.on("click", this.addFavorite);
     },
 
     makeImage: function (image) {
@@ -86,18 +82,18 @@ animated url: ${animUrl}`);*/
     <div class="card-body">
     <p class="card-text">url: ${image.url}<br>Giphy Score: ${image._score} <br> Rating: ${image.rating}</p>
     <a href="${fixedAnimatedUrl}" download><button>Download</button></a>
-    <button class="addFavoriteBtn" data-static="${fixedStillUrl}" data-anim="${fixedAnimatedUrl}">Favorite</button>
+    <button class="add-favorite-btn" data-static="${fixedStillUrl}" data-anim="${fixedAnimatedUrl}">Favorite</button>
     </div>
         `);
         imagesView.prepend(newImageDiv);
     },
 
-    addFavorite: function(event){
+    addFavorite: function (event) {
         //console.log(event.target.dataset.static);
         let fixedStillUrl = event.target.dataset.static;
         let fixedAnimatedUrl = event.target.dataset.anim;
 
-        favorites.push({static:fixedStillUrl,animated:fixedAnimatedUrl});
+        favorites.push({ static: fixedStillUrl, animated: fixedAnimatedUrl });
 
 
         let newFavorite = $(`<img src="${fixedStillUrl}" data-static="${fixedStillUrl}" data-anim="${fixedAnimatedUrl}">`);
@@ -119,5 +115,15 @@ $(document).ready(function () {
         //console.log(searchString);
         giphyMaker.addButton(searchString);
     });
+
+    $(document.body).on("click", "img",function(event){
+        if (event.target.src === event.target.dataset.static) {
+            //make animated
+            event.target.src = event.target.dataset.anim;
+        } else {
+            //make static
+            event.target.src = event.target.dataset.static;
+        }
+    })
 
 })
