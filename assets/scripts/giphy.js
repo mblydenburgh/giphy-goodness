@@ -5,8 +5,10 @@ const resetButton = $(`#reset-button`);
 const searchTextBox = $(`#search-box`);
 const imagesView = $(`#content-images`);
 
+
 //define global variables
 let searchString;
+let favorites = [];
 const apiKey = 'rpelFBXi3lzv7VO6rXM08B9lJFN1a7aT';
 
 
@@ -45,7 +47,7 @@ let giphyMaker = {
         }).done(function (response) {
             console.log(response);
             giphyMaker.printImages(response.data);
-        })
+        });
     },
 
     printImages: function (dataArray) {
@@ -58,26 +60,37 @@ let giphyMaker = {
             let animUrl = event.target.attributes[3].value;
             /*console.log(`static url: ${staticUrl}
 animated url: ${animUrl}`);*/
+            //conditional statement to switch between animated and static url's
             if (this.src === staticUrl) {
-                //make animate
+                //make animated
                 this.src = animUrl;
             } else {
                 //make static
                 this.src = staticUrl;
             }
-            //this.src = animUrl;
-        })
+        });
+        let addFavBtn = $(`#addFavoriteBtn`);
 
+        addFavBtn.on("click",this.addFavorite);
     },
 
     makeImage: function (image) {
         let newImageDiv = $(`<div class="card">`);
+        let fixedStillUrl = image.images.fixed_height_still.url;
+        let fixedAnimatedUrl = image.images.fixed_height.url;
         newImageDiv.html(`
-
-        <img src="${image.images.fixed_height_still.url}" class="card-img-top" data-static="${image.images.fixed_height_still.url}" data-anim="${image.images.fixed_height.url}">
-    <div class="card-body"><p class="card-text">url: ${image.url}<br>Giphy Score: ${image._score} <br> Rating: ${image.rating}</p><a href="${image.images.fixed_height.url}" download><button>Download</button></a></div>
+    <img src="${fixedStillUrl}" class="card-img-top" data-static="${fixedStillUrl}" data-anim="${fixedAnimatedUrl}">
+    <div class="card-body">
+    <p class="card-text">url: ${image.url}<br>Giphy Score: ${image._score} <br> Rating: ${image.rating}</p>
+    <a href="${fixedAnimatedUrl}" download><button>Download</button></a>
+    <button id="addFavoriteBtn" data-static="${fixedStillUrl}" data-anim="${fixedAnimatedUrl}">Favorite</button>
+    </div>
         `);
         imagesView.prepend(newImageDiv);
+    },
+
+    addFavorite: function(event){
+        console.log(event.target.data("static"));
     },
 
     clearData: function () { //reset the characters list back to its default values;
