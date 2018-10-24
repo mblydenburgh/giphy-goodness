@@ -4,6 +4,7 @@ const searchButton = $(`#search-button`);
 const resetButton = $(`#reset-button`);
 const searchTextBox = $(`#search-box`);
 const imagesView = $(`#content-images`);
+const favoritesView = $(`#favorites`)
 
 
 //define global variables
@@ -45,7 +46,7 @@ let giphyMaker = {
             url: `http://api.giphy.com/v1/gifs/search?q=${search}&api_key=${apiKey}&limit=10`,
             method: 'GET'
         }).done(function (response) {
-            console.log(response);
+            console.log(`response:${response}`);
             giphyMaker.printImages(response.data);
         });
     },
@@ -56,8 +57,10 @@ let giphyMaker = {
 
         $(`img`).click(function (event) {
             //console.log(event.target.attributes);
-            let staticUrl = event.target.attributes[2].value;
-            let animUrl = event.target.attributes[3].value;
+            // let staticUrl = event.target.attributes[2].value;
+            // let animUrl = event.target.attributes[3].value;
+            let staticUrl = event.target.dataset.static;
+            let animUrl = event.target.dataset.anim;
             /*console.log(`static url: ${staticUrl}
 animated url: ${animUrl}`);*/
             //conditional statement to switch between animated and static url's
@@ -69,7 +72,7 @@ animated url: ${animUrl}`);*/
                 this.src = staticUrl;
             }
         });
-        let addFavBtn = $(`#addFavoriteBtn`);
+        let addFavBtn = $(`.addFavoriteBtn`);
 
         addFavBtn.on("click",this.addFavorite);
     },
@@ -83,14 +86,22 @@ animated url: ${animUrl}`);*/
     <div class="card-body">
     <p class="card-text">url: ${image.url}<br>Giphy Score: ${image._score} <br> Rating: ${image.rating}</p>
     <a href="${fixedAnimatedUrl}" download><button>Download</button></a>
-    <button id="addFavoriteBtn" data-static="${fixedStillUrl}" data-anim="${fixedAnimatedUrl}">Favorite</button>
+    <button class="addFavoriteBtn" data-static="${fixedStillUrl}" data-anim="${fixedAnimatedUrl}">Favorite</button>
     </div>
         `);
         imagesView.prepend(newImageDiv);
     },
 
     addFavorite: function(event){
-        console.log(event.target.data("static"));
+        //console.log(event.target.dataset.static);
+        let fixedStillUrl = event.target.dataset.static;
+        let fixedAnimatedUrl = event.target.dataset.anim;
+
+        favorites.push({static:fixedStillUrl,animated:fixedAnimatedUrl});
+
+
+        let newFavorite = $(`<img src="${fixedStillUrl}" data-static="${fixedStillUrl}" data-anim="${fixedAnimatedUrl}">`);
+        favoritesView.append(newFavorite);
     },
 
     clearData: function () { //reset the characters list back to its default values;
