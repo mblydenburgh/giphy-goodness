@@ -2,9 +2,11 @@
     font-family: 'Mali', cursive;
  }
 
+button{
+    margin: 0 5px;
+}
+
  .character-button{
-     margin: 2px 5px;
-     background-color: rgb(165, 202, 224);
      border-radius: 10px;
  }
 

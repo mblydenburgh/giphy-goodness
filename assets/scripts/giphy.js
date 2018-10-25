@@ -31,7 +31,7 @@ let giphyMaker = {
 
     makeButton: function (character) {
         //console.log(`making button with ${character}`);
-        let newButton = $(`<button class='character-button'>`);
+        let newButton = $(`<button class='btn btn-info character-button'>`);
         newButton.text(character);
         buttonsSection.append(newButton);
     },
@@ -92,10 +92,8 @@ let giphyMaker = {
     },
 
     printFavorites: function () {
-        let savedFavorites = JSON.parse(localStorage.getItem("favorites"));
-        console.log(savedFavorites);
-
-        savedFavorites.map(favorite => {
+        console.log(giphyMaker.favorites)
+        giphyMaker.favorites.map(favorite => {
             let newFavorite = $(`<img src="${favorite.static}" data-static="${favorite.static}" data-anim="${favorite.animated}">`);
             favoritesView.append(newFavorite);
         })
@@ -111,13 +109,13 @@ let giphyMaker = {
 $(document).ready(function () {
     giphyMaker.printButtons();
     if (localStorage.getItem("favorites")) {
+        giphyMaker.favorites = JSON.parse(localStorage.getItem("favorites"));
         giphyMaker.printFavorites();
     }
 
 
     searchButton.click(function () {
         searchString = searchTextBox.val();
-        //console.log(searchString);
         giphyMaker.addButton(searchString);
     });
 
