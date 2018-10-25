@@ -1,6 +1,43 @@
-.card{
+ header{
+    font-family: 'Mali', cursive;
+ }
+
+ .character-button{
+     margin: 2px 5px;
+     background-color: rgb(165, 202, 224);
+     border-radius: 10px;
+ }
+
+ .character-button:hover{
+     background-color: rgb(139, 169, 187);
+ }
+ 
+ .card{
     text-align: center;
     margin: 10px 10px;
     max-width: 30%;
     float: left;
+}
+
+.card-text{
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.card-img-top{
+    height: 150px;
+}
+
+img{
+    height: 100%;
+}
+
+#favorites{
+    padding: 1em;
+}
+
+@media (min-width: 1200px){
+    .container {
+    max-width: 1350px;
+    }
 }

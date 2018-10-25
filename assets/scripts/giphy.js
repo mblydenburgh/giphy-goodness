@@ -48,7 +48,7 @@ let giphyMaker = {
             url: `http://api.giphy.com/v1/gifs/search?q=${search}&api_key=${apiKey}&limit=10`,
             method: 'GET'
         }).done(function (response) {
-            console.log(`response:${response}`);
+            console.log(response);
             giphyMaker.printImages(response.data);
         });
     },
@@ -64,12 +64,12 @@ let giphyMaker = {
 
     makeImage: function (image) {
         let newImageDiv = $(`<div class="card">`);
-        let fixedStillUrl = image.images.fixed_height_still.url;
-        let fixedAnimatedUrl = image.images.fixed_height.url;
+        let fixedStillUrl = image.images.fixed_height_small_still.url;
+        let fixedAnimatedUrl = image.images.fixed_height_small.url;
         newImageDiv.html(`
     <img src="${fixedStillUrl}" class="card-img-top" data-static="${fixedStillUrl}" data-anim="${fixedAnimatedUrl}">
     <div class="card-body">
-    <p class="card-text">url: ${image.url}<br>Giphy Score: ${image._score} <br> Rating: ${image.rating}</p>
+    <p class="card-text">source: ${image.source_tld}<br>Giphy Score: ${image._score} <br> Rating: ${image.rating}</p>
     <a href="${fixedAnimatedUrl}" download><button>Download</button></a>
     <button class="add-favorite-btn" data-static="${fixedStillUrl}" data-anim="${fixedAnimatedUrl}">Favorite</button>
     </div>
@@ -108,7 +108,10 @@ let giphyMaker = {
 //display initial list of fictional characters
 $(document).ready(function () {
     giphyMaker.printButtons();
-    giphyMaker.printFavorites();
+    if (localStorage.getItem("favorites")) {
+        giphyMaker.printFavorites();
+    }
+
 
     searchButton.click(function () {
         searchString = searchTextBox.val();
