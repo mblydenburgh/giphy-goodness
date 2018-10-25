@@ -80,7 +80,9 @@ let giphyMaker = {
     addFavorite: function (event) {
         //console.log(event.target.dataset.static);
         let fixedStillUrl = event.target.dataset.static;
+        console.log(`add favorite still: ${fixedStillUrl}`);
         let fixedAnimatedUrl = event.target.dataset.anim;
+        console.log(`add favorite animated: ${fixedAnimatedUrl}`)
 
         giphyMaker.favorites.push({ static: fixedStillUrl, animated: fixedAnimatedUrl });
         localStorage.setItem("favorites", JSON.stringify(giphyMaker.favorites));
@@ -94,7 +96,7 @@ let giphyMaker = {
         console.log(savedFavorites);
 
         savedFavorites.map(favorite => {
-            let newFavorite = $(`<img src="${favorite.static}" data-static="${favorite.static}" data-anim="${favorite.anim}">`);
+            let newFavorite = $(`<img src="${favorite.static}" data-static="${favorite.static}" data-anim="${favorite.animated}">`);
             favoritesView.append(newFavorite);
         })
     },
