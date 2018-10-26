@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="assets/styles/main.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
-        <script src="./assets/scripts/download.js"></script>
+    <script src="./assets/scripts/download.js"></script>
 
     <title>Giphy Goodness</title>
 </head>
@@ -25,9 +25,9 @@
     </header>
     <!--array of gifs inserted here-->
     <div class="container">
-            <span>Click a search button to bring the gifs:</span>
+        <span id="button-span">Click a search button to bring the gifs:</span>
         <section id="buttons">
-            
+
         </section>
 
         <section id="content">
@@ -40,7 +40,7 @@
                 <div class="col-md-5">
                     <div id="content-side">
                         <div id="add">
-                            <p><strong>Add a button</strong></p>
+                            <p><strong>Add a search button:</strong></p>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <input id="search-box" type="text" class="form-control" placeholder="enter a character">
@@ -49,7 +49,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="favorites" class="border">
+                        <div id="favorites">
                             <h3 class="text-center">Favorites</h3>
                         </div>
                     </div>

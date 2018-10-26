@@ -66,12 +66,15 @@ let giphyMaker = {
         let newImageDiv = $(`<div class="card">`);
         let fixedStillUrl = image.images.fixed_height_small_still.url;
         let fixedAnimatedUrl = image.images.fixed_height_small.url;
+        let imageSource = image.source_tld;
+        let imageRating = image.rating;
+        let imageScore = image._score;
         newImageDiv.html(`
     <img src="${fixedStillUrl}" class="card-img-top" data-static="${fixedStillUrl}" data-anim="${fixedAnimatedUrl}">
     <div class="card-body">
-    <p class="card-text">source: ${image.source_tld}<br>Giphy Score: ${image._score} <br> Rating: ${image.rating}</p>
+    <p class="card-text">source: ${imageSource}<br>Giphy Score: ${imageScore} <br> Rating: ${imageRating}</p>
     <button id="download-btn" data-download="${fixedAnimatedUrl}">Download</button>
-    <button class="add-favorite-btn" data-static="${fixedStillUrl}" data-anim="${fixedAnimatedUrl}">Favorite</button>
+    <button class="add-favorite-btn" data-static="${fixedStillUrl}" data-anim="${fixedAnimatedUrl}" data-score="${imageScore}">Favorite</button>
     </div>
         `);
         imagesView.prepend(newImageDiv);
@@ -80,21 +83,25 @@ let giphyMaker = {
     addFavorite: function (event) {
         //console.log(event.target.dataset.static);
         let fixedStillUrl = event.target.dataset.static;
-        console.log(`add favorite still: ${fixedStillUrl}`);
         let fixedAnimatedUrl = event.target.dataset.anim;
-        console.log(`add favorite animated: ${fixedAnimatedUrl}`)
+        let score = event.target.dataset.score;
+        console.log(`add favorite still: ${fixedStillUrl}`);
+        console.log(`add favorite animated: ${fixedAnimatedUrl}`);
 
-        giphyMaker.favorites.push({ static: fixedStillUrl, animated: fixedAnimatedUrl });
+        giphyMaker.favorites.push({ static: fixedStillUrl, animated: fixedAnimatedUrl, score: score });
         localStorage.setItem("favorites", JSON.stringify(giphyMaker.favorites));
 
-        let newFavorite = $(`<img src="${fixedStillUrl}" data-static="${fixedStillUrl}" data-anim="${fixedAnimatedUrl}">`);
-        favoritesView.append(newFavorite);
+        //let newFavorite = $(`<img src="${fixedStillUrl}" data-static="${fixedStillUrl}" data-anim="${fixedAnimatedUrl}" data-source="${source}">`);
+        //favoritesView.append(newFavorite);
+        giphyMaker.printFavorites();
     },
 
     printFavorites: function () {
+        favoritesView.html(`<h3 class="text-center">Favorites</h3>`)
         console.log(giphyMaker.favorites)
         giphyMaker.favorites.map(favorite => {
-            let newFavorite = $(`<img src="${favorite.static}" data-static="${favorite.static}" data-anim="${favorite.animated}">`);
+            let newFavorite = $(`<div class="card"><img class="card-img-top" src="${favorite.static}" data-static="${favorite.static}" data-anim="${favorite.animated}">
+            <div class="card-body"><p class="card-text">Score: ${favorite.score}</p></div></div>`);
             favoritesView.append(newFavorite);
         })
     },
