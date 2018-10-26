@@ -70,7 +70,7 @@ let giphyMaker = {
     <img src="${fixedStillUrl}" class="card-img-top" data-static="${fixedStillUrl}" data-anim="${fixedAnimatedUrl}">
     <div class="card-body">
     <p class="card-text">source: ${image.source_tld}<br>Giphy Score: ${image._score} <br> Rating: ${image.rating}</p>
-    <a href="${fixedAnimatedUrl}" download><button>Download</button></a>
+    <button id="download-btn" data-download="${fixedAnimatedUrl}">Download</button>
     <button class="add-favorite-btn" data-static="${fixedStillUrl}" data-anim="${fixedAnimatedUrl}">Favorite</button>
     </div>
         `);
@@ -112,7 +112,7 @@ $(document).ready(function () {
         giphyMaker.favorites = JSON.parse(localStorage.getItem("favorites"));
         giphyMaker.printFavorites();
     }
-
+ 
 
     searchButton.click(function () {
         searchString = searchTextBox.val();
@@ -127,6 +127,13 @@ $(document).ready(function () {
             //make static
             event.target.src = event.target.dataset.static;
         }
-    })
+    });
+
+    $(document.body).on("click","#download-btn",function(event){
+        console.log(`downloading...`);
+        console.log(event.target.dataset.download);
+        let imgUrl = event.target.dataset.download;
+        download(imgUrl,`${imgUrl}.gif`);
+    });
 
 })
