@@ -101,8 +101,16 @@ let giphyMaker = {
         console.log(giphyMaker.favorites)
         giphyMaker.favorites.map(favorite => {
             let newFavorite = $(`<div class="card"><img class="card-img-top" src="${favorite.static}" data-static="${favorite.static}" data-anim="${favorite.animated}">
-            <div class="card-body"><p class="card-text">Score: ${favorite.score}</p></div></div>`);
+            <div class="card-body"><p class="card-text"><i class="fas fa-trash-alt"></i> Score: ${favorite.score}</p></div></div>`);
             favoritesView.append(newFavorite);
+        });
+
+        $(`.fa-trash-alt`).mouseover(function(){
+            $(this).css("color","red");
+        });
+
+        $(`.fa-trash-alt`).mouseout(function(){
+            $(this).css("color","#615D6C");
         })
     },
 
@@ -141,6 +149,18 @@ $(document).ready(function () {
         console.log(event.target.dataset.download);
         let imgUrl = event.target.dataset.download;
         download(imgUrl,`${imgUrl}.gif`);
+    });
+
+    $(document.body).on("click",".fa-trash-alt",function(event){
+        let removeUrl = event.target.offsetParent.children[0].attributes[1].value;
+        console.log(removeUrl);
+        console.log(`favs before: ${giphyMaker.favorites}`);
+        giphyMaker.favorites = giphyMaker.favorites.filter(function(obj){
+            return obj.static !== removeUrl;
+        });
+        localStorage.setItem("favorites", JSON.stringify(giphyMaker.favorites));
+        console.log(`favs after: ${giphyMaker.favorites}`);
+        giphyMaker.printFavorites();
     });
 
 })
