@@ -32,11 +32,15 @@ body{
  .character-button:hover{
      background-color: rgb(139, 169, 187);
  }
+
+ #content-images > .card{
+    max-width: 25%; 
+ }
  
  .card{
     text-align: center;
     margin: 10px 10px;
-    max-width: 30%;
+    max-width: 45%;
     float: left;
     box-shadow: 0px 0px 10px gray;
 }
@@ -71,8 +75,25 @@ img{
     overflow: hidden;
 }
 
-@media (min-width: 1200px){
-    .container {
-    max-width: 1350px;
+
+@media(max-width:1200px){
+    #contnet-images > .card{
+        max-width: 40%
     }
+    
+    .card{
+        max-width: 40%;
+    }
+}
+
+@media (max-width: 990px){
+    .card{
+        max-width:100%;
+        float: none;
+    }
+
+    #content-images > .card{
+        max-width: 44%;
+        float: left; 
+     }
 }

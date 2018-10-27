@@ -73,8 +73,8 @@ let giphyMaker = {
     <img src="${fixedStillUrl}" class="card-img-top" data-static="${fixedStillUrl}" data-anim="${fixedAnimatedUrl}">
     <div class="card-body">
     <p class="card-text">source: ${imageSource}<br>Giphy Score: ${imageScore} <br> Rating: ${imageRating}</p>
-    <button id="download-btn" data-download="${fixedAnimatedUrl}">Download</button>
-    <button class="add-favorite-btn" data-static="${fixedStillUrl}" data-anim="${fixedAnimatedUrl}" data-score="${imageScore}">Favorite</button>
+    <button class="btn btn-outline-dark mb-1" id="download-btn" data-download="${fixedAnimatedUrl}">Download</button>
+    <button class="btn btn-outline-dark add-favorite-btn" data-static="${fixedStillUrl}" data-anim="${fixedAnimatedUrl}" data-score="${imageScore}">Favorite</button>
     </div>
         `);
         imagesView.prepend(newImageDiv);
